@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
                 setAlarm();
             }
         });
+
+        ImageButton clockButton = findViewById(R.id.Clock);
+        clockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchToAlarmListActivity();
+            }
+        });
     }
 
     private void setAlarm() {
@@ -53,5 +62,10 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         Toast.makeText(this, "Alarm set for " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+    }
+
+    private void switchToAlarmListActivity() {
+        Intent intent = new Intent(this, AlarmListActivity.class);
+        startActivity(intent);
     }
 }
