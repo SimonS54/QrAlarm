@@ -7,12 +7,30 @@
     android:background="@drawable/linear_gradient"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textSetTime"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Set time for alarm:"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/setAlarmButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.212" />
+
     <Button
         android:id="@+id/setAlarmButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="156dp"
+        android:layout_height="58dp"
         android:backgroundTint="#BD00FF"
-        android:text="Set Alarm"
+        android:text="START"
+        android:textStyle="bold"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
