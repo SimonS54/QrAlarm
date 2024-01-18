@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -61,7 +62,20 @@ public class MainActivity extends AppCompatActivity {
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
+        saveAlarmInfo(hour, minute);
+
         Toast.makeText(this, "Alarm set for " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveAlarmInfo(int hour, int minute) {
+        SharedPreferences sharedPreferences = getSharedPreferences("AlarmInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String key = "alarm_" + System.currentTimeMillis();
+
+        editor.putInt(key + "_hour", hour);
+        editor.putInt(key + "_minute", minute);
+        editor.apply();
     }
 
     private void switchToAlarmListActivity() {
