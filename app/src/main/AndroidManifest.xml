@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Register the AlarmReceiver class -->
         <receiver android:name=".AlarmReceiver" />
     </application>
 
