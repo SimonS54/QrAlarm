@@ -39,10 +39,12 @@
 
     <TimePicker
         android:id="@+id/timePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="388dp"
+        android:layout_height="269dp"
         android:amPmTextColor="#FFFFFF"
         android:headerBackground="@android:color/transparent"
+        android:numbersSelectorColor="#FFFFFF"
+        android:theme="@style/NumberPickerStyle"
         android:timePickerMode="spinner"
         app:layout_constraintBottom_toTopOf="@+id/setAlarmButton"
         app:layout_constraintEnd_toEndOf="parent"

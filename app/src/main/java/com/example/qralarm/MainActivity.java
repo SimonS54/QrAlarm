@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         Button setAlarmButton = findViewById(R.id.setAlarmButton);
         timePicker = findViewById(R.id.timePicker);
 
+        timePicker.setIs24HourView(true);
+
         setAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
