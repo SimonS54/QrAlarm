@@ -7,6 +7,45 @@
     android:background="@drawable/linear_gradient"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/qrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/qrcode"
+        app:layout_constraintBottom_toTopOf="@+id/textSetTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintStart_toEndOf="@+id/Clock"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.492" />
+
+    <ImageButton
+        android:id="@+id/download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/download"
+        app:layout_constraintBottom_toTopOf="@+id/textSetTime"
+        app:layout_constraintEnd_toStartOf="@+id/Clock"
+        app:layout_constraintHorizontal_bias="0.146"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.415" />
+
+    <ImageButton
+        android:id="@+id/Clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/vectoralarm"
+        app:layout_constraintBottom_toTopOf="@+id/textSetTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
     <TextView
         android:id="@+id/textSetTime"
         android:layout_width="250dp"
@@ -29,8 +68,8 @@
         android:layout_height="58dp"
         android:backgroundTint="#BD00FF"
         android:text="START"
-        android:textStyle="bold"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
