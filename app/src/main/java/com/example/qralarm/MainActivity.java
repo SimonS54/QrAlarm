@@ -1,6 +1,5 @@
 package com.example.qralarm;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,11 +7,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,29 +61,46 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Alarm alarm = new Alarm(hour, minute);
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this, 1, intent, PendingIntent.FLAG_IMMUTABLE
-        );
+        saveAlarmInfo(alarm);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-        saveAlarmInfo(hour, minute);
+        setAlarmWithAlarmManager(calendar);
 
         Toast.makeText(this, "Alarm set for " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
     }
 
-    private void saveAlarmInfo(int hour, int minute) {
+    private void saveAlarmInfo(Alarm alarm) {
         SharedPreferences sharedPreferences = getSharedPreferences("AlarmInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        String key = "alarm_" + System.currentTimeMillis();
+        List<Alarm> alarms = getAlarms(sharedPreferences);
 
-        editor.putInt(key + "_hour", hour);
-        editor.putInt(key + "_minute", minute);
+        alarms.add(alarm);
+
+        Gson gson = new Gson();
+        String alarmsJson = gson.toJson(alarms);
+
+        editor.putString("alarms", alarmsJson);
         editor.apply();
+    }
+
+    private List<Alarm> getAlarms(SharedPreferences sharedPreferences) {
+        String alarmsJson = sharedPreferences.getString("alarms", "[]");
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Alarm>>() {}.getType();
+        return gson.fromJson(alarmsJson, listType);
+    }
+
+    private void setAlarmWithAlarmManager(Calendar calendar) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this, (int) System.currentTimeMillis(), intent, PendingIntent.FLAG_IMMUTABLE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     private void switchToAlarmListActivity() {
