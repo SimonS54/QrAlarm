@@ -41,10 +41,13 @@
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textSetTime"
-        app:layout_constraintStart_toStartOf="parent"
+        android:amPmTextColor="#FFFFFF"
+        android:headerBackground="@android:color/transparent"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@+id/setAlarmButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/setAlarmButton"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSetTime" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
