@@ -33,6 +33,8 @@ android {
 
 dependencies {
 
+    implementation ("androidx.lifecycle:lifecycle-livedata:2.4.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.4.0")
     implementation ("com.google.zxing:core:3.4.0")
     implementation ("com.journeyapps:zxing-android-embedded:3.6.0")
     implementation ("com.google.code.gson:gson:2.8.9")
