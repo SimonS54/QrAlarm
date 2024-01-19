@@ -1,11 +1,15 @@
 package com.example.qralarm;
 
 import android.app.AlarmManager;
+import android.app.DownloadManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +19,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
@@ -47,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 switchToAlarmListActivity();
+            }
+        });
+
+        ImageButton downloadButton = findViewById(R.id.download);
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startDownload();
             }
         });
 
@@ -118,5 +133,25 @@ public class MainActivity extends AppCompatActivity {
     private void startQRScanner() {
         Intent intent = new Intent(this, QRScannerActivity.class);
         startActivity(intent);
+    }
+
+    private void startDownload() {
+        BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.frame);
+
+        Bitmap bitmap = drawable.getBitmap();
+
+        File directory = new File(Environment.getExternalStorageDirectory() + "/Images");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        File file = new File(directory, "frame.png");
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(this, "Downloaded to " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
     }
 }

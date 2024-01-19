@@ -30,12 +30,9 @@ public class QRScannerActivity extends AppCompatActivity {
         if (result != null) {
             if (result.getContents() != null) {
                 String scannedData = result.getContents();
-                // Process the scanned data as needed
 
-                // Finish the activity, returning to the main activity
                 finish();
             } else {
-                // If the result is null, it means the user canceled the scan
                 finish();
             }
         }
