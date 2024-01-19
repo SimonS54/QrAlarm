@@ -11,14 +11,25 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Alarm! Your task to be executed here.", Toast.LENGTH_SHORT).show();
+        if (hasPermission(context, android.Manifest.permission.VIBRATE)) {
+            playDefaultAlarmSound(context);
+            startVibration(context);
+        } else {
+            Toast.makeText(context, "Permission not granted", Toast.LENGTH_SHORT).show();
+        }
 
-        playDefaultAlarmSound(context);
-        startVibration(context);
+        Toast.makeText(context, "Alarm! Your task to be executed here.", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean hasPermission(Context context, String permission) {
+        return ContextCompat.checkSelfPermission(context, permission)
+                == android.content.pm.PackageManager.PERMISSION_GRANTED;
     }
 
     private void playDefaultAlarmSound(Context context) {

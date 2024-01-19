@@ -2,12 +2,17 @@ package com.example.qralarm;
 
 import android.app.AlarmManager;
 import android.app.DownloadManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -27,6 +32,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,7 +97,42 @@ public class MainActivity extends AppCompatActivity {
 
         setAlarmWithAlarmManager(calendar);
 
+        showSetAlarmNotification();
+
         Toast.makeText(this, "Alarm set for " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showSetAlarmNotification() {
+        createNotificationChannel();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "alarm_channel")
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle("Alarm Set")
+                .setContentText("Your alarm is set for the specified time.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        notificationManager.notify(1, builder.build());
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "alarm_channel",
+                    "Alarm Channel",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription("Channel for alarm notifications");
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     }
 
     private void saveAlarmInfo(Alarm alarm) {
