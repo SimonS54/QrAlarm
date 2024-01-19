@@ -1,7 +1,6 @@
 package com.example.qralarm;
 
 import android.app.AlarmManager;
-import android.app.DownloadManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +19,11 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,11 +33,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -128,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             );
             channel.setDescription("Channel for alarm notifications");
             channel.enableLights(true);
-            channel.setLightColor(Color.RED);
+            channel.setLightColor(android.graphics.Color.RED);
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);

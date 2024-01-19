@@ -24,7 +24,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             Toast.makeText(context, "Permission not granted", Toast.LENGTH_SHORT).show();
         }
 
-        Toast.makeText(context, "Alarm! Your task to be executed here.", Toast.LENGTH_SHORT).show();
+        Intent qrScannerIntent = new Intent(context, QRScannerActivity.class);
+        qrScannerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(qrScannerIntent);
     }
 
     private boolean hasPermission(Context context, String permission) {
