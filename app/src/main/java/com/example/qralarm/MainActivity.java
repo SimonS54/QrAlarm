@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -48,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 switchToAlarmListActivity();
+            }
+        });
+
+        ImageButton qrcodeButton = findViewById(R.id.qrcode);
+        qrcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startQRScanner();
             }
         });
     }
@@ -105,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void switchToAlarmListActivity() {
         Intent intent = new Intent(this, AlarmListActivity.class);
+        startActivity(intent);
+    }
+
+    private void startQRScanner() {
+        Intent intent = new Intent(this, QRScannerActivity.class);
         startActivity(intent);
     }
 }

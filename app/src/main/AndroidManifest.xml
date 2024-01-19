@@ -28,8 +28,19 @@
         <activity android:name=".AlarmListActivity">
         </activity>
 
+        <activity
+            android:name=".QRScannerActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".AlarmReceiver" />
+
     </application>
 
 </manifest>
