@@ -43,41 +43,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeUI();
+        setButtonClickListeners();
+    }
+
+    private void initializeUI() {
         Button setAlarmButton = findViewById(R.id.setAlarmButton);
         timePicker = findViewById(R.id.timePicker);
-
         timePicker.setIs24HourView(true);
+    }
 
-        setAlarmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setAlarm();
-            }
-        });
-
-        ImageButton clockButton = findViewById(R.id.Clock);
-        clockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchToAlarmListActivity();
-            }
-        });
-
-        ImageButton downloadButton = findViewById(R.id.download);
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startDownload();
-            }
-        });
-
-        ImageButton qrcodeButton = findViewById(R.id.qrcode);
-        qrcodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startQRScanner();
-            }
-        });
+    private void setButtonClickListeners() {
+        findViewById(R.id.setAlarmButton).setOnClickListener(v -> setAlarm());
+        findViewById(R.id.Clock).setOnClickListener(v -> switchToAlarmListActivity());
+        findViewById(R.id.download).setOnClickListener(v -> startDownload());
+        findViewById(R.id.qrcode).setOnClickListener(v -> startQRScanner());
     }
 
     private void setAlarm() {

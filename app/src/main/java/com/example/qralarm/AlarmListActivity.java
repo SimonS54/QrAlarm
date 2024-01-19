@@ -38,43 +38,55 @@ public class AlarmListActivity extends AppCompatActivity {
 
     private void displayAlarms() {
         SharedPreferences sharedPreferences = getSharedPreferences("AlarmInfo", MODE_PRIVATE);
-
         LinearLayout alarmContainer = findViewById(R.id.alarmContainer);
         alarmContainer.removeAllViews();
 
         List<Alarm> alarms = getAlarms(sharedPreferences);
 
         for (Alarm alarm : alarms) {
-            int hour = alarm.getHour();
-            int minute = alarm.getMinute();
-
-            Log.d("AlarmListActivity", "Retrieved alarm with hour: " + hour + ", minute: " + minute);
-
-            LinearLayout alarmLayout = new LinearLayout(this);
-            alarmLayout.setOrientation(LinearLayout.HORIZONTAL);
-            alarmLayout.setGravity(Gravity.CENTER);
-
-            TextView alarmTextView = new TextView(this);
-            alarmTextView.setText(String.format("Alarm at %02d:%02d", hour, minute));
-            alarmTextView.setTextSize(30);
-            alarmTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-
-            ImageButton deleteButton = new ImageButton(this);
-            deleteButton.setImageResource(R.drawable.trash);
-            deleteButton.setBackground(null);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deleteAlarm(alarm, sharedPreferences);
-                    displayAlarms();
-                }
-            });
-
-            alarmLayout.addView(alarmTextView);
-            alarmLayout.addView(deleteButton);
-
-            alarmContainer.addView(alarmLayout);
+            displaySingleAlarm(alarm, alarmContainer, sharedPreferences);
         }
+    }
+
+    private void displaySingleAlarm(Alarm alarm, LinearLayout alarmContainer, SharedPreferences sharedPreferences) {
+        int hour = alarm.getHour();
+        int minute = alarm.getMinute();
+        Log.d("AlarmListActivity", "Retrieved alarm with hour: " + hour + ", minute: " + minute);
+
+        LinearLayout alarmLayout = createAlarmLayout();
+        TextView alarmTextView = createAlarmTextView(hour, minute);
+        ImageButton deleteButton = createDeleteButton(alarm, sharedPreferences);
+
+        alarmLayout.addView(alarmTextView);
+        alarmLayout.addView(deleteButton);
+
+        alarmContainer.addView(alarmLayout);
+    }
+
+    private LinearLayout createAlarmLayout() {
+        LinearLayout alarmLayout = new LinearLayout(this);
+        alarmLayout.setOrientation(LinearLayout.HORIZONTAL);
+        alarmLayout.setGravity(Gravity.CENTER);
+        return alarmLayout;
+    }
+
+    private TextView createAlarmTextView(int hour, int minute) {
+        TextView alarmTextView = new TextView(this);
+        alarmTextView.setText(String.format("Alarm at %02d:%02d", hour, minute));
+        alarmTextView.setTextSize(30);
+        alarmTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        return alarmTextView;
+    }
+
+    private ImageButton createDeleteButton(Alarm alarm, SharedPreferences sharedPreferences) {
+        ImageButton deleteButton = new ImageButton(this);
+        deleteButton.setImageResource(R.drawable.trash);
+        deleteButton.setBackground(null);
+        deleteButton.setOnClickListener(v -> {
+            deleteAlarm(alarm, sharedPreferences);
+            displayAlarms();
+        });
+        return deleteButton;
     }
 
 
